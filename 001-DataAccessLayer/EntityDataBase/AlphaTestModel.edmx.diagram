@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="55f6f5a75c8c47e39c1e58f4f9badce4" Name="Diagram1">
+        <EntityTypeShape EntityType="AlphaTestModel.FOLLOW" Width="1.5" PointX="5.25" PointY="1.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="AlphaTestModel.GROUP" Width="1.5" PointX="0.75" PointY="1.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="AlphaTestModel.USER" Width="1.5" PointX="3" PointY="1" IsExpanded="true" />
+        <AssociationConnector Association="AlphaTestModel.FK__FOLLOWS__followe__46E78A0C" ManuallyRouted="false" />
+        <AssociationConnector Association="AlphaTestModel.FK__FOLLOWS__followe__47DBAE45" ManuallyRouted="false" />
+        <AssociationConnector Association="AlphaTestModel.FK__USERS__userGroup__403A8C7D" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

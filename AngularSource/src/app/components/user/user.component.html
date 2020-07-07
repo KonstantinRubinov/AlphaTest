@@ -1,0 +1,10 @@
+<div class="row">
+  <div class="col-md-2">{{userTable.userName}}</div>
+  <div class="col-md-2">{{userTable.groupName}}</div>
+  <div class="col-md-2">{{userTable.userNumberOfFollowers}}</div>
+  <div class="col-md-2" *ngIf="userTable.userID!=myId"><button (mouseover)="changeText(true)" (mouseout)="changeText(false)" type="button" [ngStyle]="buttonStyle" (click)="DoCommand()">{{followText}}</button></div>
+  <div class="col-md-2" *ngIf="userTable.userID==myId"><button type="button" [ngStyle]="buttonStyle" disabled>You</button></div>
+</div>
+
+
+

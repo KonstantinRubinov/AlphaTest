@@ -1,0 +1,413 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="AlphaTestModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="FOLLOWS">
+          <Key>
+            <PropertyRef Name="followCounter" />
+          </Key>
+          <Property Name="followCounter" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="followedID" Type="int" Nullable="false" />
+          <Property Name="followerID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="GROUPS">
+          <Key>
+            <PropertyRef Name="groupID" />
+          </Key>
+          <Property Name="groupID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="groupName" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="USERS">
+          <Key>
+            <PropertyRef Name="userID" />
+          </Key>
+          <Property Name="userID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="userName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="userGroupId" Type="int" Nullable="false" />
+          <Property Name="userNumberOfFollowers" Type="int" Nullable="false" />
+          <Property Name="userPassword" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <Association Name="FK__FOLLOWS__followe__46E78A0C">
+          <End Role="USERS" Type="Self.USERS" Multiplicity="1" />
+          <End Role="FOLLOWS" Type="Self.FOLLOWS" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="USERS">
+              <PropertyRef Name="userID" />
+            </Principal>
+            <Dependent Role="FOLLOWS">
+              <PropertyRef Name="followedID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__FOLLOWS__followe__47DBAE45">
+          <End Role="USERS" Type="Self.USERS" Multiplicity="1" />
+          <End Role="FOLLOWS" Type="Self.FOLLOWS" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="USERS">
+              <PropertyRef Name="userID" />
+            </Principal>
+            <Dependent Role="FOLLOWS">
+              <PropertyRef Name="followerID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__USERS__userGroup__403A8C7D">
+          <End Role="GROUPS" Type="Self.GROUPS" Multiplicity="1" />
+          <End Role="USERS" Type="Self.USERS" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="GROUPS">
+              <PropertyRef Name="groupID" />
+            </Principal>
+            <Dependent Role="USERS">
+              <PropertyRef Name="userGroupId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Function Name="AddFollower" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="followedID" Type="int" Mode="In" />
+          <Parameter Name="followerID" Type="int" Mode="In" />
+        </Function>
+        <Function Name="DeleteFollower" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="followedID" Type="int" Mode="In" />
+          <Parameter Name="followerID" Type="int" Mode="In" />
+        </Function>
+        <Function Name="GetAllUsers" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="GetOneUserById" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="userID" Type="int" Mode="In" />
+        </Function>
+        <Function Name="GetOneUserForTableById" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="followedID" Type="int" Mode="In" />
+          <Parameter Name="followerID" Type="int" Mode="In" />
+        </Function>
+        <Function Name="GetUsersForTable" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="myId" Type="int" Mode="In" />
+        </Function>
+        <Function Name="IsFollowedByMe" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="followedID" Type="int" Mode="In" />
+          <Parameter Name="followerID" Type="int" Mode="In" />
+        </Function>
+        <Function Name="ReturnUserByNamePassword" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="userName" Type="nvarchar" Mode="In" />
+          <Parameter Name="userPassword" Type="nvarchar" Mode="In" />
+        </Function>
+        <EntityContainer Name="AlphaTestModelStoreContainer">
+          <EntitySet Name="FOLLOWS" EntityType="Self.FOLLOWS" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="GROUPS" EntityType="Self.GROUPS" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="USERS" EntityType="Self.USERS" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__FOLLOWS__followe__46E78A0C" Association="Self.FK__FOLLOWS__followe__46E78A0C">
+            <End Role="USERS" EntitySet="USERS" />
+            <End Role="FOLLOWS" EntitySet="FOLLOWS" />
+          </AssociationSet>
+          <AssociationSet Name="FK__FOLLOWS__followe__47DBAE45" Association="Self.FK__FOLLOWS__followe__47DBAE45">
+            <End Role="USERS" EntitySet="USERS" />
+            <End Role="FOLLOWS" EntitySet="FOLLOWS" />
+          </AssociationSet>
+          <AssociationSet Name="FK__USERS__userGroup__403A8C7D" Association="Self.FK__USERS__userGroup__403A8C7D">
+            <End Role="GROUPS" EntitySet="GROUPS" />
+            <End Role="USERS" EntitySet="USERS" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="AlphaTestModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="FOLLOW">
+          <Key>
+            <PropertyRef Name="followCounter" />
+          </Key>
+          <Property Name="followCounter" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="followedID" Type="Int32" Nullable="false" />
+          <Property Name="followerID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="USER" Relationship="Self.FK__FOLLOWS__followe__46E78A0C" FromRole="FOLLOWS" ToRole="USERS" />
+          <NavigationProperty Name="USER1" Relationship="Self.FK__FOLLOWS__followe__47DBAE45" FromRole="FOLLOWS" ToRole="USERS" />
+        </EntityType>
+        <EntityType Name="GROUP">
+          <Key>
+            <PropertyRef Name="groupID" />
+          </Key>
+          <Property Name="groupID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="groupName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="USERS" Relationship="Self.FK__USERS__userGroup__403A8C7D" FromRole="GROUPS" ToRole="USERS" />
+        </EntityType>
+        <EntityType Name="USER">
+          <Key>
+            <PropertyRef Name="userID" />
+          </Key>
+          <Property Name="userID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="userName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="userGroupId" Type="Int32" Nullable="false" />
+          <Property Name="userNumberOfFollowers" Type="Int32" Nullable="false" />
+          <Property Name="userPassword" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="FOLLOWS" Relationship="Self.FK__FOLLOWS__followe__46E78A0C" FromRole="USERS" ToRole="FOLLOWS" />
+          <NavigationProperty Name="FOLLOWS1" Relationship="Self.FK__FOLLOWS__followe__47DBAE45" FromRole="USERS" ToRole="FOLLOWS" />
+          <NavigationProperty Name="GROUP" Relationship="Self.FK__USERS__userGroup__403A8C7D" FromRole="USERS" ToRole="GROUPS" />
+        </EntityType>
+        <Association Name="FK__FOLLOWS__followe__46E78A0C">
+          <End Role="USERS" Type="Self.USER" Multiplicity="1" />
+          <End Role="FOLLOWS" Type="Self.FOLLOW" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="USERS">
+              <PropertyRef Name="userID" />
+            </Principal>
+            <Dependent Role="FOLLOWS">
+              <PropertyRef Name="followedID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__FOLLOWS__followe__47DBAE45">
+          <End Role="USERS" Type="Self.USER" Multiplicity="1" />
+          <End Role="FOLLOWS" Type="Self.FOLLOW" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="USERS">
+              <PropertyRef Name="userID" />
+            </Principal>
+            <Dependent Role="FOLLOWS">
+              <PropertyRef Name="followerID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__USERS__userGroup__403A8C7D">
+          <End Role="GROUPS" Type="Self.GROUP" Multiplicity="1" />
+          <End Role="USERS" Type="Self.USER" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="GROUPS">
+              <PropertyRef Name="groupID" />
+            </Principal>
+            <Dependent Role="USERS">
+              <PropertyRef Name="userGroupId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="AlphaTestEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="FOLLOWS" EntityType="Self.FOLLOW" />
+          <EntitySet Name="GROUPS" EntityType="Self.GROUP" />
+          <EntitySet Name="USERS" EntityType="Self.USER" />
+          <AssociationSet Name="FK__FOLLOWS__followe__46E78A0C" Association="Self.FK__FOLLOWS__followe__46E78A0C">
+            <End Role="USERS" EntitySet="USERS" />
+            <End Role="FOLLOWS" EntitySet="FOLLOWS" />
+          </AssociationSet>
+          <AssociationSet Name="FK__FOLLOWS__followe__47DBAE45" Association="Self.FK__FOLLOWS__followe__47DBAE45">
+            <End Role="USERS" EntitySet="USERS" />
+            <End Role="FOLLOWS" EntitySet="FOLLOWS" />
+          </AssociationSet>
+          <AssociationSet Name="FK__USERS__userGroup__403A8C7D" Association="Self.FK__USERS__userGroup__403A8C7D">
+            <End Role="GROUPS" EntitySet="GROUPS" />
+            <End Role="USERS" EntitySet="USERS" />
+          </AssociationSet>
+          <FunctionImport Name="AddFollower" ReturnType="Collection(AlphaTestModel.AddFollower_Result)">
+            <Parameter Name="followedID" Mode="In" Type="Int32" />
+            <Parameter Name="followerID" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="DeleteFollower" ReturnType="Collection(AlphaTestModel.DeleteFollower_Result)">
+            <Parameter Name="followedID" Mode="In" Type="Int32" />
+            <Parameter Name="followerID" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="GetAllUsers" ReturnType="Collection(AlphaTestModel.GetAllUsers_Result)" />
+          <FunctionImport Name="GetOneUserById" ReturnType="Collection(AlphaTestModel.GetOneUserById_Result)">
+            <Parameter Name="userID" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="GetOneUserForTableById" ReturnType="Collection(AlphaTestModel.GetOneUserForTableById_Result)">
+            <Parameter Name="followedID" Mode="In" Type="Int32" />
+            <Parameter Name="followerID" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="GetUsersForTable" ReturnType="Collection(AlphaTestModel.GetUsersForTable_Result)">
+            <Parameter Name="myId" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="IsFollowedByMe" ReturnType="Collection(Int32)">
+            <Parameter Name="followedID" Mode="In" Type="Int32" />
+            <Parameter Name="followerID" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="ReturnUserByNamePassword" ReturnType="Collection(AlphaTestModel.ReturnUserByNamePassword_Result)">
+            <Parameter Name="userName" Mode="In" Type="String" />
+            <Parameter Name="userPassword" Mode="In" Type="String" />
+          </FunctionImport>
+        </EntityContainer>
+        <ComplexType Name="AddFollower_Result">
+          <Property Type="Int32" Name="userID" Nullable="false" />
+          <Property Type="String" Name="userName" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="groupName" Nullable="true" MaxLength="50" />
+          <Property Type="Int32" Name="userNumberOfFollowers" Nullable="false" />
+          <Property Type="Boolean" Name="followedByMe" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="DeleteFollower_Result">
+          <Property Type="Int32" Name="userID" Nullable="false" />
+          <Property Type="String" Name="userName" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="groupName" Nullable="true" MaxLength="50" />
+          <Property Type="Int32" Name="userNumberOfFollowers" Nullable="false" />
+          <Property Type="Boolean" Name="followedByMe" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="GetAllUsers_Result">
+          <Property Type="Int32" Name="userID" Nullable="false" />
+          <Property Type="String" Name="userName" Nullable="false" MaxLength="50" />
+          <Property Type="Int32" Name="userGroupId" Nullable="false" />
+          <Property Type="Int32" Name="userNumberOfFollowers" Nullable="false" />
+          <Property Type="String" Name="userPassword" Nullable="false" MaxLength="50" />
+        </ComplexType>
+        <ComplexType Name="GetOneUserById_Result">
+          <Property Type="Int32" Name="userID" Nullable="false" />
+          <Property Type="String" Name="userName" Nullable="false" MaxLength="50" />
+          <Property Type="Int32" Name="userGroupId" Nullable="false" />
+          <Property Type="Int32" Name="userNumberOfFollowers" Nullable="false" />
+          <Property Type="String" Name="userPassword" Nullable="false" MaxLength="50" />
+        </ComplexType>
+        <ComplexType Name="GetOneUserForTableById_Result">
+          <Property Type="Int32" Name="userID" Nullable="false" />
+          <Property Type="String" Name="userName" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="groupName" Nullable="true" MaxLength="50" />
+          <Property Type="Int32" Name="userNumberOfFollowers" Nullable="false" />
+          <Property Type="Boolean" Name="followedByMe" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="GetUsersForTable_Result">
+          <Property Type="Int32" Name="userID" Nullable="false" />
+          <Property Type="String" Name="userName" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="groupName" Nullable="true" MaxLength="50" />
+          <Property Type="Int32" Name="userNumberOfFollowers" Nullable="false" />
+          <Property Type="Boolean" Name="followedByMe" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="ReturnUserByNamePassword_Result">
+          <Property Type="Int32" Name="userID" Nullable="false" />
+          <Property Type="String" Name="userName" Nullable="false" MaxLength="50" />
+          <Property Type="Int32" Name="userGroupId" Nullable="false" />
+          <Property Type="Int32" Name="userNumberOfFollowers" Nullable="false" />
+          <Property Type="String" Name="userPassword" Nullable="false" MaxLength="50" />
+        </ComplexType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="AlphaTestModelStoreContainer" CdmEntityContainer="AlphaTestEntities">
+          <EntitySetMapping Name="FOLLOWS">
+            <EntityTypeMapping TypeName="AlphaTestModel.FOLLOW">
+              <MappingFragment StoreEntitySet="FOLLOWS">
+                <ScalarProperty Name="followCounter" ColumnName="followCounter" />
+                <ScalarProperty Name="followedID" ColumnName="followedID" />
+                <ScalarProperty Name="followerID" ColumnName="followerID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="GROUPS">
+            <EntityTypeMapping TypeName="AlphaTestModel.GROUP">
+              <MappingFragment StoreEntitySet="GROUPS">
+                <ScalarProperty Name="groupID" ColumnName="groupID" />
+                <ScalarProperty Name="groupName" ColumnName="groupName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="USERS">
+            <EntityTypeMapping TypeName="AlphaTestModel.USER">
+              <MappingFragment StoreEntitySet="USERS">
+                <ScalarProperty Name="userID" ColumnName="userID" />
+                <ScalarProperty Name="userName" ColumnName="userName" />
+                <ScalarProperty Name="userGroupId" ColumnName="userGroupId" />
+                <ScalarProperty Name="userNumberOfFollowers" ColumnName="userNumberOfFollowers" />
+                <ScalarProperty Name="userPassword" ColumnName="userPassword" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="AddFollower" FunctionName="AlphaTestModel.Store.AddFollower">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="AlphaTestModel.AddFollower_Result">
+                <ScalarProperty Name="userID" ColumnName="userID" />
+                <ScalarProperty Name="userName" ColumnName="userName" />
+                <ScalarProperty Name="groupName" ColumnName="groupName" />
+                <ScalarProperty Name="userNumberOfFollowers" ColumnName="userNumberOfFollowers" />
+                <ScalarProperty Name="followedByMe" ColumnName="followedByMe" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="DeleteFollower" FunctionName="AlphaTestModel.Store.DeleteFollower">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="AlphaTestModel.DeleteFollower_Result">
+                <ScalarProperty Name="userID" ColumnName="userID" />
+                <ScalarProperty Name="userName" ColumnName="userName" />
+                <ScalarProperty Name="groupName" ColumnName="groupName" />
+                <ScalarProperty Name="userNumberOfFollowers" ColumnName="userNumberOfFollowers" />
+                <ScalarProperty Name="followedByMe" ColumnName="followedByMe" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="GetAllUsers" FunctionName="AlphaTestModel.Store.GetAllUsers">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="AlphaTestModel.GetAllUsers_Result">
+                <ScalarProperty Name="userID" ColumnName="userID" />
+                <ScalarProperty Name="userName" ColumnName="userName" />
+                <ScalarProperty Name="userGroupId" ColumnName="userGroupId" />
+                <ScalarProperty Name="userNumberOfFollowers" ColumnName="userNumberOfFollowers" />
+                <ScalarProperty Name="userPassword" ColumnName="userPassword" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="GetOneUserById" FunctionName="AlphaTestModel.Store.GetOneUserById">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="AlphaTestModel.GetOneUserById_Result">
+                <ScalarProperty Name="userID" ColumnName="userID" />
+                <ScalarProperty Name="userName" ColumnName="userName" />
+                <ScalarProperty Name="userGroupId" ColumnName="userGroupId" />
+                <ScalarProperty Name="userNumberOfFollowers" ColumnName="userNumberOfFollowers" />
+                <ScalarProperty Name="userPassword" ColumnName="userPassword" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="GetOneUserForTableById" FunctionName="AlphaTestModel.Store.GetOneUserForTableById">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="AlphaTestModel.GetOneUserForTableById_Result">
+                <ScalarProperty Name="userID" ColumnName="userID" />
+                <ScalarProperty Name="userName" ColumnName="userName" />
+                <ScalarProperty Name="groupName" ColumnName="groupName" />
+                <ScalarProperty Name="userNumberOfFollowers" ColumnName="userNumberOfFollowers" />
+                <ScalarProperty Name="followedByMe" ColumnName="followedByMe" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="GetUsersForTable" FunctionName="AlphaTestModel.Store.GetUsersForTable">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="AlphaTestModel.GetUsersForTable_Result">
+                <ScalarProperty Name="userID" ColumnName="userID" />
+                <ScalarProperty Name="userName" ColumnName="userName" />
+                <ScalarProperty Name="groupName" ColumnName="groupName" />
+                <ScalarProperty Name="userNumberOfFollowers" ColumnName="userNumberOfFollowers" />
+                <ScalarProperty Name="followedByMe" ColumnName="followedByMe" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="IsFollowedByMe" FunctionName="AlphaTestModel.Store.IsFollowedByMe" />
+          <FunctionImportMapping FunctionImportName="ReturnUserByNamePassword" FunctionName="AlphaTestModel.Store.ReturnUserByNamePassword">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="AlphaTestModel.ReturnUserByNamePassword_Result">
+                <ScalarProperty Name="userID" ColumnName="userID" />
+                <ScalarProperty Name="userName" ColumnName="userName" />
+                <ScalarProperty Name="userGroupId" ColumnName="userGroupId" />
+                <ScalarProperty Name="userNumberOfFollowers" ColumnName="userNumberOfFollowers" />
+                <ScalarProperty Name="userPassword" ColumnName="userPassword" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
