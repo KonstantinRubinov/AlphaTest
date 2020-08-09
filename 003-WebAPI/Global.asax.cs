@@ -37,6 +37,7 @@ namespace AlphaTestSystem
 			AreaRegistration.RegisterAllAreas();
 			ConfigureApi();
 
+			GlobalConfiguration.Configuration.MessageHandlers.Add(new MessageLoggingHandler());
 			GlobalConfiguration.Configure(WebApiConfig.Register);
         }
     }
